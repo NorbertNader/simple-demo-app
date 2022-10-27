@@ -5,14 +5,14 @@ import Button from "@cloudscape-design/components/button";
 import { useDashboardList } from "./useDashboardList";
 
 export const DashboardList = ({ credentials }) => {
-  const dashboards = useDashboardList(credentials);
+  const { dashboards, createDashboard } = useDashboardList(credentials);
 
   return (
     <ContentLayout
       header={
         <Header variant="h1">
           <br />
-          Simple visualization application
+          Awesome Visualizations
         </Header>
       }
     >
@@ -20,7 +20,9 @@ export const DashboardList = ({ credentials }) => {
         header={
           <Header
             counter={(dashboards && dashboards.length) || 0}
-            actions={<Button>Create dashboard</Button>}
+            actions={
+              <Button onClick={createDashboard}>Create dashboard</Button>
+            }
           >
             Dashboards
           </Header>

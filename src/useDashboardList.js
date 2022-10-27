@@ -1,40 +1,44 @@
-import { useEffect, useState } from "react";
-import {
-  S3Client,
-  ListObjectsV2Command,
-  DeleteObjectCommand,
-} from "@aws-sdk/client-s3";
-import { Auth } from "aws-amplify";
-
-const bucket = "my-demo-app-bucket-diehbria";
+import { useEffect, useState, useRef } from "react";
+import { Storage } from "aws-amplify";
 
 export const useDashboardList = () => {
   const [dashboards, setDashboards] = useState(undefined);
 
-  useEffect(() => {
-    const s3Client = new S3Client({
-      region: "us-east-1",
-      credentials: Auth.currentUserCredentials(),
-    });
+  const dashboardRef = useRef();
+  dashboardRef.current = dashboards || [];
 
-    s3Client.send(new ListObjectsV2Command({ Bucket: bucket })).then((data) => {
+  const deleteDashboard = (dashboardName) => {
+    Storage.remove(dashboardName).then(() => {
+      console.log("filtering dashboards", dashboards);
       setDashboards(
-        data.Contents.map(({ Key, LastModified }) => ({
-          name: Key,
-          lastModified: LastModified,
-          deleteDashboard: () => {
-            setDashboards(dashboards.filter(({ name }) => name !== Key));
-            s3Client.send(
-              new DeleteObjectCommand({
-                Key,
-                Bucket: bucket,
-              })
-            );
-          },
+        dashboardRef.current.filter(({ name }) => name !== dashboardName)
+      );
+    });
+  };
+
+  const fetchDashboards = () => {
+    Storage.list("").then((res) => {
+      setDashboards(
+        res.map(({ key, lastModified }) => ({
+          name: key,
+          lastModified: new Date(lastModified),
+          deleteDashboard: () => deleteDashboard(key),
         }))
       );
     });
+  };
+
+  useEffect(() => {
+    fetchDashboards();
   }, []);
 
-  return dashboards;
+  const createDashboard = () => {
+    Storage.put(
+      `demo-app-test-dashboard-${Math.random()}-${Math.random()}`,
+      "[]"
+    );
+    fetchDashboards();
+  };
+
+  return { dashboards, createDashboard };
 };
