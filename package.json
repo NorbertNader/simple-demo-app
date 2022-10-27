@@ -2,6 +2,7 @@
   "name": "demo-app",
   "version": "0.1.0",
   "private": true,
+  "main": "./build/index.html",
   "dependencies": {
     "@aws-amplify/ui-react": "^3.5.10",
     "@aws-sdk/client-s3": "^3.197.0",

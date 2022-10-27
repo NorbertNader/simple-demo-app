@@ -4,17 +4,17 @@ import { Amplify } from "aws-amplify";
 import { Authenticator } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
 
+import AppLayout from "@cloudscape-design/components/app-layout";
 import { DashboardList } from "./DashboardList";
 
 import awsExports from "./aws-exports";
-import { ContentLayout } from "@cloudscape-design/components";
 Amplify.configure(awsExports);
 
 function App() {
   return (
-    <ContentLayout>
-      <Authenticator>{() => <DashboardList />}</Authenticator>
-    </ContentLayout>
+    <Authenticator>
+      {() => <AppLayout contentType="form" content={<DashboardList />} />}
+    </Authenticator>
   );
 }
 

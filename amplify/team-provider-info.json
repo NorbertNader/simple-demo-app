@@ -16,7 +16,10 @@
         "demoapp57784547": {}
       },
       "hosting": {
-        "S3AndCloudFront": {}
+        "amplifyhosting": {
+          "appId": "d1tomu05dge1k8",
+          "type": "cicd"
+        }
       }
     }
   }
