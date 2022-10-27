@@ -31,5 +31,12 @@
       "type": "cicd",
       "lastPushTimeStamp": "2022-10-27T22:18:20.765Z"
     }
+  },
+  "storage": {
+    "dashboards": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": []
+    }
   }
 }

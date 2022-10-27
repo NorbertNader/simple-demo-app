@@ -20,6 +20,9 @@
           "appId": "d1tomu05dge1k8",
           "type": "cicd"
         }
+      },
+      "storage": {
+        "dashboards": {}
       }
     }
   }

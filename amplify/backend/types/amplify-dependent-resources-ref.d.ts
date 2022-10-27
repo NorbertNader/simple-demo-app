@@ -10,12 +10,10 @@ export type AmplifyDependentResourcesAttributes = {
             "AppClientID": "string"
         }
     },
-    "hosting": {
-        "S3AndCloudFront": {
-            "Region": "string",
-            "HostingBucketName": "string",
-            "WebsiteURL": "string",
-            "S3BucketSecureURL": "string"
+    "storage": {
+        "dashboards": {
+            "BucketName": "string",
+            "Region": "string"
         }
     }
 }
