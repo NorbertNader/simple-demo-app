@@ -1,24 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "@cloudscape-design/global-styles/index.css";
+
+import AppLayout from "@cloudscape-design/components/app-layout";
+import { DashboardList } from "./DashboardList";
+import { Login } from "./Login";
 
 function App() {
+  const [credentials, setCredentials] = useState(undefined);
+  const onLogin = ({ accessKeyId, secretAccessKey, sessionToken }) => {
+    setCredentials({ accessKeyId, secretAccessKey, sessionToken });
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppLayout
+      contentType="form"
+      content={
+        credentials === undefined ? (
+          <Login onLogin={onLogin} />
+        ) : (
+          <DashboardList credentials={credentials} />
+        )
+      }
+    />
   );
 }
 
