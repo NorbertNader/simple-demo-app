@@ -11,22 +11,20 @@ export const DashboardList = ({ credentials }) => {
     <ContentLayout
       header={
         <Header variant="h1">
-            <br/>
+          <br />
           Simple visualization application
         </Header>
       }
     >
       <Table
-          header={
-              <Header
-                  counter={dashboards && dashboards.length || 0}
-                  actions={
-                      <Button>Create dashboard</Button>
-                  }
-              >
-                  Dashboards
-              </Header>
-          }
+        header={
+          <Header
+            counter={(dashboards && dashboards.length) || 0}
+            actions={<Button>Create dashboard</Button>}
+          >
+            Dashboards
+          </Header>
+        }
         columnDefinitions={[
           {
             id: "name",
@@ -38,11 +36,15 @@ export const DashboardList = ({ credentials }) => {
             header: "Last modified",
             cell: ({ lastModified }) => lastModified.toLocaleString(),
           },
-            {
-                id: "delete",
-                header: "",
-                cell: ({ deleteDashboard }) => <Button variant="link" onClick={deleteDashboard}>delete dashboard</Button>,
-            },
+          {
+            id: "delete",
+            header: "",
+            cell: ({ deleteDashboard }) => (
+              <Button variant="link" onClick={deleteDashboard}>
+                delete dashboard
+              </Button>
+            ),
+          },
         ]}
         items={dashboards || []}
         loadingText={"Loading dashboards"}

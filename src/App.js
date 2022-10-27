@@ -1,26 +1,20 @@
-import { useState } from "react";
 import "@cloudscape-design/global-styles/index.css";
+import { Amplify } from "aws-amplify";
 
-import AppLayout from "@cloudscape-design/components/app-layout";
+import { Authenticator } from "@aws-amplify/ui-react";
+import "@aws-amplify/ui-react/styles.css";
+
 import { DashboardList } from "./DashboardList";
-import { Login } from "./Login";
+
+import awsExports from "./aws-exports";
+import { ContentLayout } from "@cloudscape-design/components";
+Amplify.configure(awsExports);
 
 function App() {
-  const [credentials, setCredentials] = useState(undefined);
-  const onLogin = ({ accessKeyId, secretAccessKey, sessionToken }) => {
-    setCredentials({ accessKeyId, secretAccessKey, sessionToken });
-  };
   return (
-    <AppLayout
-      contentType="form"
-      content={
-        credentials === undefined ? (
-          <Login onLogin={onLogin} />
-        ) : (
-          <DashboardList credentials={credentials} />
-        )
-      }
-    />
+    <ContentLayout>
+      <Authenticator>{() => <DashboardList />}</Authenticator>
+    </ContentLayout>
   );
 }
 
